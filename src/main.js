@@ -1,12 +1,23 @@
-import Vue from 'vue'
-import App from './App'
-import './uni.promisify.adaptor'
+import App from "./App";
 
-Vue.config.productionTip = false
+// #ifndef VUE3
+import Vue from "vue";
 
-App.mpType = 'app'
+Vue.config.productionTip = false;
 
+import uView from "@/uni_modules/uview-ui";
+import authorization from "@/common/util/authorization";
+import globalFilter from "@/common/util/globalFilter.js";
+import xView from "@/common/js/index";
+
+App.mpType = "app";
 const app = new Vue({
-  ...App
-})
-app.$mount()
+  ...App,
+});
+Vue.use(uView);
+Vue.use(xView);
+Vue.use(globalFilter);
+// 权限
+Vue.use(authorization);
+app.$mount();
+// #endif
