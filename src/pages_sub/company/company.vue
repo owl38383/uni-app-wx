@@ -1,35 +1,45 @@
 <template>
-    <view class="x-page">
+    <view class="x-page x-padding-10">
         <u-skeleton :loading="loading" :rowsHeight="120" :title="false" rows="10">
-		        <view class="u-flex-row">
-				        {{company_info.info_company.company_name}}
-				        {{company_info.info_company.company_address}}
-				        {{company_info.info_location.address}}
-				        {{company_info.info_location.latitude}}
-				        {{company_info.info_location.longitude}}
-		        </view>
+            <u-form v-if="!loading" labelPosition="left" labelWidth='120'>
+                <u-form-item label="单位名称">
+                    <text class="u-info">{{ company_info.info_company.company_name }}</text>
+                </u-form-item>
+                <u-form-item label="单位地址">
+                    <text class="u-info">{{ company_info.info_company.company_address }}</text>
+                </u-form-item>
+
+                <u-form-item label="单位坐标">
+                    <text class="u-info">
+                        {{ company_info.info_location.latitude }}, {{ company_info.info_location.longitude }}
+                    </text>
+                </u-form-item>
+
+            </u-form>
         </u-skeleton>
     </view>
 </template>
 
 <script>
 
+import {loadingStatus} from "@/common/js/decorator";
+
 export default {
 	data() {
 		return {
 			company: uni.$x.localStorage.getStore("company"),
 			company_info: {},
-			loading: false,
+			loading: true,
 		}
 	},
 	methods: {
+		@loadingStatus('loading')
 		get_company_info() {
-			this.loading = true;
 			let params = {}
-			uni.$x.api.get_company_cared().then(res => {
+			return uni.$x.api.get_company_cared().then(res => {
 				console.log(res)
 				this.company_info = res
-			}).finally(() => this.loading = false)
+			})
 		}
 	},
 	onLoad() {

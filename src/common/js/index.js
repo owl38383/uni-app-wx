@@ -19,7 +19,7 @@ const $x = {
 	localStorage: local_storage,
 	request,
 	api,
-	UIConfig,
+	UIConfig
 }
 
 // $u挂载到uni对象上

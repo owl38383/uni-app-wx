@@ -3,9 +3,7 @@
         <u-skeleton :loading="loading" :rowsHeight="30" :title="false" rows="20">
             <u-form v-if="!loading" labelPosition="left" labelWidth='120'>
                 <u-form-item>
-                    <!--                    <u-image :src="device_info.info_file_storage.hostname+device_info.info_file_storage.absolute_path"></u-image>-->
-                    <canvas id="firstCanvas" canvas-id="firstCanvas" style="width: 300px; height: 200px;"></canvas>
-
+                    <u-image :src="device_info.info_file_storage.hostname+device_info.info_file_storage.absolute_path"/>
                 </u-form-item>
 
                 <u-form-item label="历史告警">
@@ -85,6 +83,7 @@
 <script>
 
 import UImage from "@/uni_modules/uview-ui/components/u--image/u--image.vue";
+import { loadingStatus, loggingDecorator} from "@/common/js/decorator";
 
 export default {
 	name: 'device_info',
@@ -102,25 +101,12 @@ export default {
 		}
 	},
 	methods: {
-		get_info() {
-			this.loading = true;
-			uni.$x.api.get_device_info(this.info_params).then(res => {
+		@loadingStatus("loading")
+			@loggingDecorator()
+		 get_info() {
+			return  uni.$x.api.get_device_info(this.info_params).then(res => {
 				this.device_info = res;
-				this.$nextTick(res=>{
-					let context = uni.createCanvasContext('firstCanvas')
-					// 绘制图片
-					let url = this.device_info.info_file_storage.hostname + this.device_info.info_file_storage.absolute_path
-					
-					//参数分别为 背景图地址  x轴  y轴  宽  高
-					context.drawImage(url, 0, 0, 500,400);
-					context.save();
-					context.draw(false, (res) => {
-						console.log(res)
-					})
-				})
-				
-				
-			}).finally(() => this.loading = false)
+			})
 		},
 		toEvent() {
 		

@@ -1,22 +1,15 @@
-/**
- * 说明
- * #属性名 私有属性
- *
- *
- */
-
 export class ZeusConfig {
 	#zeusUrl = 'https://admin.ansource.cn';
 	#sign_key = 'Fubang.119*(';
 	#channel = 'XCXC'
 	
-	#host= ''
+	#host = ''
 	
 	constructor(zeusUrl, sign_key, channel) {
 		this.#zeusUrl = zeusUrl
 		this.#sign_key = sign_key
 		this.#channel = channel
-		console.log('init ZeusConfig',this)
+		console.log(`init ZeusConfig  [zeusUrl : ${this.#zeusUrl}] ----- [channel : ${this.#channel}]`)
 	}
 	
 	getZeusUrl = () => {

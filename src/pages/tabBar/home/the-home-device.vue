@@ -1,4 +1,6 @@
 <script>
+import {loadingStatus, loggingDecorator} from "@/common/js/decorator";
+
 export default {
 	name: "the-home-device",
 	data() {
@@ -42,7 +44,8 @@ export default {
 			scrollTop: 0,
 			old: {
 				scrollTop: 0
-			}
+			},
+			device_loading: true,
 		};
 	},
 	watch: {
@@ -53,7 +56,7 @@ export default {
 	},
 	methods: {
 		// 默认加载
-		initLoad(){
+		initLoad() {
 			this.deviceData = {
 				total: 0,
 				list: [],
@@ -61,18 +64,20 @@ export default {
 			this.device_list_params.page_no = 0;
 			this.get_device_list();
 		},
+		@loadingStatus("device_loading")
+		@loggingDecorator()
 		get_device_list() {
-			uni.$x.api
+			return uni.$x.api
 				.get_device_list_by_any_ids(this.device_list_params)
 				.then((res) => {
 					let oldList = this.deviceData.list
-					this.deviceData.list = oldList.concat(res.list);
+					this.deviceData.list = [...oldList,...res.list];
 					this.deviceData.total = res.total;
 				});
 		},
-		toInfo(item){
+		toInfo(item) {
 			uni.navigateTo({
-				url:`/pages_sub/device/device_info?device_id=${item.info_device.thing_id}&device_type=${item.info_device.thing_type}`
+				url: `/pages_sub/device/device_info?device_id=${item.info_device.thing_id}&device_type=${item.info_device.thing_type}`
 			})
 		},
 		// 改变状态
@@ -83,7 +88,7 @@ export default {
 			}, 1000);
 		},
 		// 下拉刷新
-		refresherPulling(){
+		refresherPulling() {
 			this.initLoad()
 		},
 		// 加载更多

@@ -1,5 +1,11 @@
 <template>
   <view>
+      <x-navbar>
+          <view slot="title">
+              个人中心
+          </view>
+      </x-navbar>
+		  
     <view class="u-page">
       <view class="my-item" @click="user">
         <u-row>
@@ -112,9 +118,6 @@ export default {
     },
   },
   mounted() {
-    uni.setNavigationBarTitle({
-      title: "个人中心",
-    });
     this.userInfo = uni.$x.localStorage.getStore("userInfo");
   },
 };

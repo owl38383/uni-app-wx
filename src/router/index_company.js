@@ -5,7 +5,7 @@ module.exports = [
 				{
 					path: "company",
 					style: {
-						navigationBarTitleText: "",
+						navigationBarTitleText: "单位信息",
 						enablePullDownRefresh: false,
 					},
 				},

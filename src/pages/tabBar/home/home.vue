@@ -1,17 +1,8 @@
 <template>
     <view class="u-flex-column" style="height: 100%">
         <u-overlay :show="show">
-            <scroll-view :enable-back-to-top="true" :scroll-y="true" class="warp u-flex-column u-flex-fill" @tap.stop>
-                <x-navbar>
-                    <view slot="left">
-                        <u-icon class="close" name="close" size="24" @click="show = false"></u-icon>
-                    </view>
-                </x-navbar>
-                <view class="content">
-                    <the-check-company :duration="400" :opacity="0.3" :z-index="999" class="rect"
-                                       @tap.stop/>
-                </view>
-            </scroll-view>
+            <the-check-company @close="show = false" :duration="400" :opacity="0.3" :z-index="999" class="rect"
+                               @tap.stop/>
         </u-overlay>
         <x-navbar>
             <view slot="left" @click="openScan">
@@ -61,6 +52,7 @@
                         <view class="text" style="-webkit-flex: 1;flex: 1;">
                             <view class="">编号 {{ item.info_device.thing_id }}</view>
                             <view class="">位置 {{ item.info_device.specific }}</view>
+                            <view class="">{{item.info_device.last_active_time}}</view>
                         </view>
                         <view class="text" style="width: 100rpx;">
                             {{ item.info_device.enum_device_online_status.status }}
@@ -81,20 +73,22 @@ import TheHomeCard from "@/pages/tabBar/home/the-home-card.vue";
 import TheHomeDevice from "@/pages/tabBar/home/the-home-device.vue";
 import TheHomeApp from "@/pages/tabBar/home/the-home-app.vue";
 import TheHomeScan from "@/pages/tabBar/home/the-home-scan.vue";
-import theCheckCompany from "@/pages/tabBar/home/the-check-company.vue";
 import TheCheckCompany from "@/pages/tabBar/home/the-check-company.vue";
-
+import {dateUtils} from "@/common/util.js"
 export default {
-	components: {TheCheckCompany},
-	component: {theCheckCompany},
 	mixins: [TheHomeCard, TheHomeDevice, TheHomeApp, TheHomeScan,],
+	components: {TheCheckCompany},
 	data() {
 		return {
 			company: uni.$x.localStorage.getStore("company"),
 			show: false,
 		};
 	},
-	computed: {},
+	computed: {
+		dateUtils() {
+			return dateUtils
+		}
+	},
 	watch: {
 		company() {
 			uni.$emit("barTitle", this.company.checkCompany.name);
@@ -158,24 +152,6 @@ export default {
   }
 }
 
-
-.check-company {
-  background: #FFFFFF;
-
-  .close {
-    padding: 10px;
-    text-align: center;
-  }
-}
-
-.warp {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  background: #FFFFFF;
-}
-
 @keyframes shadow-inset-center {
   0% {
     box-shadow: inset 0 0 0 0 transparent
@@ -191,8 +167,5 @@ export default {
   animation: shadow-inset-center .4s cubic-bezier(.25, .46, .45, .94) both
 }
 
-.content {
-
-}
 
 </style>
