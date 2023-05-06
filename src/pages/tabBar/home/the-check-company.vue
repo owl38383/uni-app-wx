@@ -5,14 +5,14 @@
                 <u-icon class="close" name="close" size="24" @click="close"></u-icon>
             </view>
             <view slot="title">
-                <u-search v-model="keyword" placeholder="请输入单位名称"></u-search>
+                <u-search v-model="keyword" placeholder="请输入单位名称" @change="search" :showAction="false" bgColor="#FFFFFF" height="25px"></u-search>
             </view>
         </x-navbar>
         <view class="content">
             <scroll-view :enable-back-to-top="true" :scroll-y="true" class="warp u-flex-column u-flex-fill" @tap.stop>
                 <u-skeleton :loading="loading" :rowsHeight="120" :title="false" rows="10">
                     <uni-collapse>
-                        <uni-collapse-item v-for="(item, index) in company_data" :key="index"
+                        <uni-collapse-item v-for="(item, index) in company_list" :key="index"
                                            :show-arrow="item.child instanceof Array && item.child.length>0"
                                            class="company-cell">
                             <view slot="title" class="uni-title x-padding-10" @click.stop="checkCompany(item)">
@@ -66,12 +66,37 @@ export default {
 			keyword: "",
 		};
 	},
-	computed: {},
+	computed: {
+		company_list() {
+			if (!this.keyword) {
+				return this.company_data;
+			}
+			return this.filterByThingName(this.company_data, 'thing_name', this.keyword);
+		}
+	},
 	watch: {},
 	methods: {
+		filterByThingName(data, key, value) {
+			let result = [];
+			let fn = function (data) {
+				if (Array.isArray(data)) { // 判断是否是数组并且没有的情况下，
+					data.forEach(item => {
+						if (item[key].includes(value)) {
+							result.push(item);
+						} else if (item.child) {
+							fn(item.child);
+						}
+					})
+				}
+			}
+			fn(data); // 调用一下
+			return result;
+		},
+		
 		@loadingStatus('loading')
 		getCompanyList() {
 			return uni.$x.api.get_filter_linkage().then((res) => {
+				// 转化为相同结构
 				let myCompany = [
 					{
 						thing_id: this.company.id,
@@ -94,8 +119,11 @@ export default {
 			this.company.checkCompany.type = item.thing_type;
 			uni.$emit("switchCompany", this.company);
 		},
-		close(){
-			this.$emit('close',false)
+		close() {
+			this.$emit('close', false)
+		},
+		search() {
+		
 		}
 	},
 	mounted() {
@@ -115,6 +143,7 @@ export default {
   background: #FFFFFF;
   height: 100%;
   width: 100%;
+
   .close {
     padding: 10px;
     text-align: center;

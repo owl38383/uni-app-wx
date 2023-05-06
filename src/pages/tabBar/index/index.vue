@@ -4,7 +4,7 @@
             <home v-if="tabBarValue === 'home'"></home>
             <about v-else-if="tabBarValue === 'about'"></about>
         </view>
-		    <view class="x-tabbar">
+        <view class="x-tabbar">
             <u-tabbar :fixed="true" :placeholder="true" :safeAreaInsetBottom="true" :value="tabBarValue"
                       transition="all 300ms ease" @change="(name) => (tabBarValue = name)">
                 <u-tabbar-item v-for="item in tabBarList" :key="item.name" :name="item.name" :text="item.text">
@@ -12,7 +12,7 @@
                     <image slot="inactive-icon" :src="item.iconPath" class="u-page__item__slot-icon"/>
                 </u-tabbar-item>
             </u-tabbar>
-		    </view>
+        </view>
     </view>
 </template>
 
@@ -64,6 +64,8 @@ export default {
 		this.unloadOn()
 	},
 	onLoad() {
+		uni.$emit('upload_geo')
+		
 		// 开发中因为热加载会多次监听
 		this.unloadOn()
 		uni.setNavigationBarTitle({
@@ -80,7 +82,8 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh
+  height: 100vh;
+  background: $uni-bg-color;
 }
 
 .x-tabbar {

@@ -1,13 +1,14 @@
 import local_storage from "@/common/js/local_storage";
 import * as request from "@/common/js/request/request";
 import * as api from "@/common/js/request/api";
+import * as pageMixins from "@/common/js/pagemixins";
 import {ZeusConfig} from "@/common/js/request/zeusConfig";
 
 const zeusUrl = 'https://admin.ansource.cn';
 const sign_key = 'Fubang.119*(';
 // const channel = 'XCXC' //120
-// const channel = 'XCDEV' //119
-const channel = 'XC' // 阿
+const channel = 'XCDEV' //119
+// const channel = 'XC' // 阿
 
 const UIConfig = {
 	statusBarHeight: 0,
@@ -19,6 +20,7 @@ const $x = {
 	localStorage: local_storage,
 	request,
 	api,
+	pageMixins,
 	UIConfig
 }
 

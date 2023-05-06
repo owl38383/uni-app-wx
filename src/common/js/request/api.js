@@ -28,5 +28,5 @@ export const get_device_list_by_any_ids = params => request.get('/api/api_proxy/
 export const get_device_info = async params => request.get('/api/api_proxy/device/info/', params)
 export const enumList = params => request.get('/api/api_proxy/enum/list/' + params + '/')
 export const list_events_v2 = async params => request.get('/api/api_proxy/event/list_events_v3/', params)
-export const get_building_list = params => request.get('/api/screen_proxy/building/getBuildingList/', params)
+export const get_building_list = params => request.get('/api/api_proxy/building/format_list_by_company_id/', params)
 export const get_company_cared = params => request.get('/fe/api_proxy/company_cared/info/', params)

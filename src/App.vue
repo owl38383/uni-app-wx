@@ -10,6 +10,7 @@ export default {
 	},
 	methods: {
 		loadOn() {
+			// 登出服务
 			uni.$on("logout", function (data) {
 				console.log("监听到事件来自 logout ，携带参数 msg 为：" + data);
 				uni.$x.localStorage.removeStore("userInfo");
@@ -18,7 +19,7 @@ export default {
 					url: "/pages/loading/loading",
 				});
 			});
-			
+			// 判定zeus服务信息不存在 重新加载
 			uni.$on("server_info", function (data) {
 				console.log("监听到事件来自 server_info ，携带参数 msg 为：" + data);
 				
@@ -26,10 +27,29 @@ export default {
 					url: "/pages/loading/loading",
 				});
 			});
+			// 上传人员定位
+			uni.$on("upload_geo", function (data) {
+				console.log("监听到事件来自 upload_geo ，携带参数 msg 为：" + data);
+				let params = {
+					type: 'wgs84',
+					geocode: true,
+				}
+				let user_info = uni.$x.localStorage.getStore("userInfo");
+				let user_id = user_info.user_id
+				let geoArray = uni.$x.localStorage.getStore("user_geo") || []
+				setInterval(() => {
+					uni.getLocation(params).then(res => {
+						geoArray.push([...res,{uploadTime:Date.now()}])
+						uni.$x.localStorage.setStore("user_geo_" + user_id, geoArray)
+					});
+				}, 3000)
+				
+			});
 		},
 		unloadOn() {
 			uni.$off("logout")
 			uni.$off("server_info")
+			uni.$off("upload_geo")
 		},
 		
 		// 获取系统信息
@@ -62,7 +82,8 @@ export default {
 		// 开发中因为热加载会多次监听
 		this.unloadOn()
 		this.loadOn()
-		this.$nextTick(()=>{
+		// 初始化 就获取导航栏信息 一次性计算避免抖动
+		this.$nextTick(() => {
 			this.getSystemInfo();
 		})
 		console.log("App Launch");

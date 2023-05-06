@@ -5,7 +5,7 @@ module.exports = [
 				{
 					path: "building",
 					style: {
-						navigationBarTitleText: "",
+						navigationBarTitleText: "建筑列表",
 						enablePullDownRefresh: false,
 					},
 				},

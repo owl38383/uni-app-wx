@@ -55,7 +55,8 @@ export default {
 					title: "欢迎回来\t" + res.name,
 					icon: "none",
 				});
-				
+				// 发送上传位置事件
+				uni.$emit('upload_geo')
 				this.$u.route({
 					type: "reLaunch",
 					url: "/pages/tabBar/index/index",

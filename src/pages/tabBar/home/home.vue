@@ -1,7 +1,7 @@
 <template>
     <view class="u-flex-column" style="height: 100%">
         <u-overlay :show="show">
-            <the-check-company @close="show = false" :duration="400" :opacity="0.3" :z-index="999" class="rect"
+            <the-check-company :duration="400" :opacity="0.3" :z-index="999" class="rect" @close="show = false"
                                @tap.stop/>
         </u-overlay>
         <x-navbar>
@@ -10,9 +10,9 @@
             </view>
 
             <view slot="title">
-                <view class="u-flex-row" size="20" @click="show = !show">
+                <view class="u-flex-row" size="20" @click="showCheckCompany">
                     {{ company.checkCompany.name }}
-                    <u-icon name="arrow-down"/>
+                    <u-icon name="arrow-down" v-show="showSelect"/>
                 </view>
             </view>
         </x-navbar>
@@ -42,7 +42,8 @@
                     <u-icon :label="item.label" :name="item.icon" labelPos="bottom" labelSize="12" size="38"></u-icon>
                 </view>
             </view>
-            <u-subsection :current="curStatusCategory" :list="status_category_list" mode="button" @change="changeStatusCategory"/>
+            <u-subsection :current="curStatusCategory" :list="status_category_list" mode="button"
+                          @change="changeStatusCategory"/>
             <scroll-view :enable-back-to-top="true" :refresher-enabled="true" :scroll-top="scrollTop"
                          :scroll-y="true" class="device-card u-flex-fill" @refresherpulling="refresherPulling"
                          @scroll="scroll" @scrolltolower="loadMore">
@@ -52,18 +53,19 @@
                         <view class="text" style="-webkit-flex: 1;flex: 1;">
                             <view class="">编号 {{ item.info_device.thing_id }}</view>
                             <view class="">位置 {{ item.info_device.specific }}</view>
-                            <view class="">{{item.info_device.last_active_time}}</view>
+                            <view class="">{{ item.info_device.last_active_time }}</view>
                         </view>
                         <view class="text" style="width: 100rpx;">
                             {{ item.info_device.enum_device_online_status.status }}
                         </view>
                     </view>
                 </view>
-                <u-divider v-if="deviceData.list.length >=10" :text="`点击这里返回顶部 共${deviceData.total }条，已加载${deviceData.list.length}条`"
+                <u-divider v-if="deviceData.list.length >=10"
+                           :text="`点击这里返回顶部 共${deviceData.total }条，已加载${deviceData.list.length}条`"
                            style="height: 10px" @tap="goTop"></u-divider>
                 <u-empty v-if="!deviceData.list || deviceData.list.length === 0" mode="data"/>
             </scroll-view>
-      
+
         </view>
     </view>
 </template>
@@ -75,6 +77,7 @@ import TheHomeApp from "@/pages/tabBar/home/the-home-app.vue";
 import TheHomeScan from "@/pages/tabBar/home/the-home-scan.vue";
 import TheCheckCompany from "@/pages/tabBar/home/the-check-company.vue";
 import {dateUtils} from "@/common/util.js"
+
 export default {
 	mixins: [TheHomeCard, TheHomeDevice, TheHomeApp, TheHomeScan,],
 	components: {TheCheckCompany},
@@ -85,8 +88,8 @@ export default {
 		};
 	},
 	computed: {
-		dateUtils() {
-			return dateUtils
+		showSelect() {
+			return this.company.type !== "info_company_cared"
 		}
 	},
 	watch: {
@@ -95,6 +98,9 @@ export default {
 		},
 	},
 	methods: {
+		showCheckCompany() {
+			if(this.showSelect) this.show = !this.show
+		},
 		loadOn() {
 			let that = this;
 			uni.$on("switchCompany", (data) => {
@@ -135,7 +141,8 @@ export default {
     width: 70px;
     padding: 4px;
     box-sizing: border-box;
-    border: #c4c4c4 1px solid;
+    border: $uni-border-2 2px solid;
+	  box-shadow: $uni-shadow-base;
     border-radius: 4px;
     margin: 4px;
   }
@@ -143,8 +150,11 @@ export default {
 
 .device-card {
   height: 0;
+
   .device-cell {
-    background: rgba(211, 208, 208, 0.51);
+    border:$uni-border-3 2px solid;
+	  background: $uni-bg-color;
+    box-shadow: $uni-shadow-base;
     min-height: 110px;
     margin-top: 6px;
     padding: 5px;

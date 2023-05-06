@@ -103,7 +103,7 @@ function request(method, url, data, header, custom) {
 // 定义 get 请求函数
 export function get(url = String, data = Object, header = {}, custom = Object, cacheTime = 10000) {
 	const wrapperFunction = cacheGet(request, cacheTime)
-	return wrapperFunction(METHOD_GET, url, data, custom, header)
+	return wrapperFunction(METHOD_GET, url, data, header , custom, )
 }
 
 // 定义 post 请求函数

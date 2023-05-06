@@ -1,18 +1,18 @@
 module.exports = [
   {
-    root: "pages_sub/device",
+    root: "pages_sub/user",
     pages: [
       {
-        path: "device",
+        path: "user",
         style: {
           navigationBarTitleText: "",
           enablePullDownRefresh: true,
         },
       },
 	    {
-        path: "device_info",
+        path: "geo",
         style: {
-          navigationBarTitleText: "设备信息",
+          navigationBarTitleText: "位置信息",
           enablePullDownRefresh: false,
         },
       },

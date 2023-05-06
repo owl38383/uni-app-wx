@@ -50,6 +50,12 @@
             title="设置"
             @click="toSetting"
           ></u-cell>
+		        <u-cell
+            :isLink="true"
+            icon="setting"
+            title="位置信息"
+            @click="toGeo"
+          ></u-cell>
           <u-cell
             :isLink="true"
             icon="kefu-ermai"
@@ -111,6 +117,11 @@ export default {
     feedback() {
       uni.$u.throttle(() => {
         uni.navigateTo({ url: "/pages/common/helpFeedback/feedback" });
+      }, 1000);
+    },
+	  toGeo() {
+      uni.$u.throttle(() => {
+        uni.navigateTo({ url: "/pages_sub/user/geo" });
       }, 1000);
     },
     logout() {

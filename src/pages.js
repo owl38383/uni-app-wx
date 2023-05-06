@@ -29,6 +29,7 @@ module.exports = hot((pagesJson) => {
 	    ...require("./router/index_device.js"),
 	    ...require("./router/index_company.js"),
 	    ...require("./router/index_building.js"),
+	    ...require("./router/index_user.js"),
     ],
   };
 });
