@@ -102,5 +102,16 @@
     },
     "mp-qq" : {
         "usingComponents" : true
+    },
+    "h5" : {
+        "sdkConfigs" : {
+            "maps" : {
+                "amap" : {
+                    "key" : "7e081d6c5cb739e7dc562cf802801958",
+                    "securityJsCode" : "ebf37c3a965289f45e693b083573c987",
+                    "serviceHost" : ""
+                }
+            }
+        }
     }
 }

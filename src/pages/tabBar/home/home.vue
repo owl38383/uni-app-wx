@@ -53,10 +53,10 @@
                         <view class="text" style="-webkit-flex: 1;flex: 1;">
                             <view class="">编号 {{ item.info_device.thing_id }}</view>
                             <view class="">位置 {{ item.info_device.specific }}</view>
-                            <view class="">{{ item.info_device.last_active_time }}</view>
+                            <view class="">{{ item.info_device.last_active_time}}</view>
                         </view>
                         <view class="text" style="width: 100rpx;">
-                            {{ item.info_device.enum_device_online_status.status }}
+                            <u-icon color="#5ac725" :label="item.label" :name="item.info_device.enum_device_online_status.status == '在线'?'wifi':'wifi-off'" labelPos="bottom" labelSize="12" size="38"></u-icon>
                         </view>
                     </view>
                 </view>

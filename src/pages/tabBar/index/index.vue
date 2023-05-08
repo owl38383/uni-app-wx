@@ -7,10 +7,7 @@
         <view class="x-tabbar">
             <u-tabbar :fixed="true" :placeholder="true" :safeAreaInsetBottom="true" :value="tabBarValue"
                       transition="all 300ms ease" @change="(name) => (tabBarValue = name)">
-                <u-tabbar-item v-for="item in tabBarList" :key="item.name" :name="item.name" :text="item.text">
-                    <image slot="active-icon" :src="item.selectedIconPath" class="u-page__item__slot-icon"/>
-                    <image slot="inactive-icon" :src="item.iconPath" class="u-page__item__slot-icon"/>
-                </u-tabbar-item>
+                <u-tabbar-item v-for="item in tabBarList" :key="item.name" :name="item.name" :text="item.text" :icon="item.icon" ></u-tabbar-item>
             </u-tabbar>
         </view>
     </view>
@@ -33,16 +30,12 @@ export default {
 				{
 					text: "首页",
 					name: "home",
-					icon: "",
-					iconPath: "/pages/tabBar/static/tabBar/home.png",
-					selectedIconPath: "/pages/tabBar/static/tabBar/home-fill.png",
+					icon: "home",
 				},
 				{
 					text: "我的",
 					name: "about",
-					icon: "",
-					iconPath: "/pages/tabBar/static/tabBar/my.png",
-					selectedIconPath: "/pages/tabBar/static/tabBar/my-fill.png",
+					icon: "account",
 				},
 			],
 		};

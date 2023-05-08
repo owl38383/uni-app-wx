@@ -36,11 +36,23 @@ export default {
 				}
 				let user_info = uni.$x.localStorage.getStore("userInfo");
 				let user_id = user_info.user_id
-				let geoArray = uni.$x.localStorage.getStore("user_geo") || []
+				let geo_key = "user_geo_" + user_id;
+				let polyline_key = "user_polyline_" + user_id;
+				let geoArray = uni.$x.localStorage.getStore(geo_key) || []
+				let polylineArray = uni.$x.localStorage.getStore(polyline_key) || []
 				setInterval(() => {
 					uni.getLocation(params).then(res => {
-						geoArray.push([...res,{uploadTime:Date.now()}])
-						uni.$x.localStorage.setStore("user_geo_" + user_id, geoArray)
+						let params = {
+							uploadTime:Date.now(),
+							id:Date.now(),
+							iconPath:'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+							latitude:res[1].latitude+Math.random()/1000,
+							longitude: res[1].longitude-Math.random()/1000
+						}
+						geoArray.push([params])
+						polylineArray.push({points:[{latitude: params.latitude, longitude: params.longitude}]	,color:'#0542a4'})
+						uni.$x.localStorage.setStore(geo_key, geoArray)
+						uni.$x.localStorage.setStore(polyline_key, polylineArray)
 					});
 				}, 3000)
 				
@@ -102,4 +114,5 @@ export default {
 @import "@/uni_modules/uni-scss/index.scss";
 @import "@/common/css/common.scss";
 @import "@/common/css/flex.scss";
+@import "@/common/font/iconfont.css";
 </style>
