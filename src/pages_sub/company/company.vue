@@ -33,7 +33,7 @@ export default {
 		}
 	},
 	methods: {
-		@loadingStatus('loading')
+		// @loadingStatus('loading')
 		get_company_info() {
 			let params = {}
 			return uni.$x.api.get_company_cared().then(res => {

@@ -49,7 +49,6 @@ function formatRequest(config) {
 }
 
 function formatResponse(response) {
-	console.log(response)
 	let res = response.data
 	if (res.code == 0 || res.err_code == 0) {
 		return res.data;

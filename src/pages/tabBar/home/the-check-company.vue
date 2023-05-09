@@ -93,7 +93,7 @@ export default {
 			return result;
 		},
 		
-		@loadingStatus('loading')
+		// @loadingStatus('loading')
 		getCompanyList() {
 			return uni.$x.api.get_filter_linkage().then((res) => {
 				// 转化为相同结构

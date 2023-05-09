@@ -7,8 +7,8 @@ import {ZeusConfig} from "@/common/js/request/zeusConfig";
 const zeusUrl = 'https://admin.ansource.cn';
 const sign_key = 'Fubang.119*(';
 // const channel = 'XCXC' //120
-const channel = 'XCDEV' //119
-// const channel = 'XC' // 阿
+// const channel = 'XCDEV' //119
+const channel = 'XC' // 阿
 
 const UIConfig = {
 	statusBarHeight: 0,

@@ -65,7 +65,7 @@ export default {
 			this.vPage.page_no = 0;
 			return this.get_device_list();
 		},
-		@loadingStatus('loading')
+		// @loadingStatus('loading')
 		get_device_list() {
 			return uni.$x.api.get_device_list_by_any_ids(this.vPage).then(res => {
 				let oldList = this.deviceData.list

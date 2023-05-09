@@ -101,8 +101,8 @@ export default {
 		}
 	},
 	methods: {
-		@loadingStatus("loading")
-			@loggingDecorator()
+		// @loadingStatus("loading")
+		// @loggingDecorator()
 		 get_info() {
 			return  uni.$x.api.get_device_info(this.info_params).then(res => {
 				this.device_info = res;

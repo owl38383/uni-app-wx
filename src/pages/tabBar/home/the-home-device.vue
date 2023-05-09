@@ -64,8 +64,8 @@ export default {
 			this.device_list_params.page_no = 0;
 			this.get_device_list();
 		},
-		@loadingStatus("device_loading")
-		@loggingDecorator()
+		// @loadingStatus("device_loading")
+		// @loggingDecorator()
 		get_device_list() {
 			return uni.$x.api
 				.get_device_list_by_any_ids(this.device_list_params)

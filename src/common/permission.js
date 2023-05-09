@@ -176,10 +176,10 @@ function requestIOS(permissionID) {
     });
 }
 
-function requestAndroid(permissionID) {
+function requestAndroid(...permissionID) {
     return new Promise((resolve, reject) => {
         plus.android.requestPermissions(
-            [permissionID],
+            [...permissionID],
             function(resultObj) {
                 var result = 0;
                 for (var i = 0; i < resultObj.granted.length; i++) {

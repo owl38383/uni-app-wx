@@ -1,136 +1,96 @@
 <template>
-  <view>
-      <x-navbar>
-          <view slot="title">
-              个人中心
-          </view>
-      </x-navbar>
-		  
-    <view class="u-page">
-      <view class="my-item" @click="user">
-        <u-row>
-          <u-col span="3">
-            <!--<u-avatar :src="$u.host + userInfo.user_pic[0].absolute_path" size='60' :text="userInfo.name.substr(0,1)"></u-avatar>-->
-            <u-avatar :text="userInfo.name.substr(0, 1)" size="60"></u-avatar>
-          </u-col>
-          <u-col span="9">
-            <u-cell-group :border="false">
-              <u-cell
-                :border="false"
-                :isLink="true"
-                :title="userInfo.name"
-                class="user-cell"
-                label="更换头像、账号管理、授权信息"
-              ></u-cell>
-            </u-cell-group>
-          </u-col>
-        </u-row>
-      </view>
-      <view class="my-item my-item-main u-margin-top-20">
-        <u-cell-group :border="false">
-          <u-cell
-            :value="userInfo.enum_user_role.name"
-            icon="account"
-            title="职位"
-          ></u-cell>
-          <u-cell :value="userInfo.account" icon="phone" title="电话"></u-cell>
-          <u-cell
-            :border="false"
-            :value="userInfo.company_name"
-            icon="tags"
-            title="单位"
-          ></u-cell>
-        </u-cell-group>
-      </view>
-      <view class="my-item my-item-main u-margin-top-20">
-        <u-cell-group :border="false">
-          <u-cell
-            :isLink="true"
-            icon="setting"
-            title="设置"
-            @click="toSetting"
-          ></u-cell>
-		        <u-cell
-            :isLink="true"
-            icon="setting"
-            title="位置信息"
-            @click="toGeo"
-          ></u-cell>
-          <u-cell
-            :isLink="true"
-            icon="kefu-ermai"
-            title="帮助"
-            @click="helpFeedback"
-          ></u-cell>
-          <u-cell
-            :isLink="true"
-            icon="email"
-            title="反馈"
-            @click="feedback"
-          ></u-cell>
-          <u-cell
-            :border="false"
-            :isLink="true"
-            icon="attach"
-            title="关于"
-            @click="about"
-          ></u-cell>
-        </u-cell-group>
-      </view>
-    </view>
+    <view>
+        <x-navbar>
+            <view slot="title">
+                个人中心
+            </view>
+        </x-navbar>
 
-    <u-button @click="logout">退出登录</u-button>
-  </view>
+        <view class="u-page">
+            <view class="my-item" @click="user">
+                <u-row>
+                    <u-col span="3">
+                        <!--<u-avatar :src="$u.host + userInfo.user_pic[0].absolute_path" size='60' :text="userInfo.name.substr(0,1)"></u-avatar>-->
+                        <u-avatar :text="userInfo.name.substr(0, 1)" size="60"></u-avatar>
+                    </u-col>
+                    <u-col span="9">
+                        <u-cell-group :border="false">
+                            <u-cell :border="false" :isLink="true" :title="userInfo.name" class="user-cell"
+                                    label="更换头像、账号管理、授权信息"></u-cell>
+                        </u-cell-group>
+                    </u-col>
+                </u-row>
+            </view>
+            <view class="my-item my-item-main u-margin-top-20">
+                <u-cell-group :border="false">
+                    <u-cell :value="userInfo.enum_user_role.name" icon="account" title="职位"></u-cell>
+                    <u-cell :value="userInfo.account" icon="phone" title="电话"></u-cell>
+                    <u-cell :border="false" :value="userInfo.company_name" icon="tags" title="单位"></u-cell>
+                </u-cell-group>
+            </view>
+            <view class="my-item my-item-main u-margin-top-20">
+                <u-cell-group :border="false">
+                    <u-cell :isLink="true" icon="setting" title="设置" @click="toSetting"></u-cell>
+                    <u-cell :isLink="true" icon="setting" title="位置信息" @click="toGeo"></u-cell>
+                    <u-cell :isLink="true" icon="kefu-ermai" title="帮助" @click="helpFeedback"></u-cell>
+                    <u-cell :isLink="true" icon="email" title="反馈" @click="feedback"></u-cell>
+                    <u-cell :border="false" :isLink="true" icon="attach" title="关于" @click="about"></u-cell>
+                </u-cell-group>
+            </view>
+        </view>
+
+        <u-button @click="logout">退出登录</u-button>
+    </view>
 </template>
 
 <script>
 import {} from "@/common/js/request/api";
 
 export default {
-  data() {
-    return {
-      src: "",
-      userInfo: uni.$x.localStorage.getStore("userInfo"),
-    };
-  },
-  methods: {
-    user() {
-      uni.$u.throttle(() => {
-        uni.navigateTo({ url: "/pages/common/user/user" });
-      }, 1000);
-    },
-    about() {
-      uni.$u.throttle(() => {
-        uni.navigateTo({ url: "/pages/common/about/about?mode=0" });
-      }, 1000);
-    },
-    toSetting() {
-      uni.$u.throttle(() => {
-        uni.navigateTo({ url: "/pages/common/setting/setting" });
-      }, 1000);
-    },
-    helpFeedback() {
-      uni.$u.throttle(() => {
-        uni.navigateTo({ url: "/pages/common/helpFeedback/helpFeedback" });
-      }, 1000);
-    },
-    feedback() {
-      uni.$u.throttle(() => {
-        uni.navigateTo({ url: "/pages/common/helpFeedback/feedback" });
-      }, 1000);
-    },
-	  toGeo() {
-      uni.$u.throttle(() => {
-        uni.navigateTo({ url: "/pages_sub/user/geo" });
-      }, 1000);
-    },
-    logout() {
-      uni.$emit("logout", 1);
-    },
-  },
-  mounted() {
-    this.userInfo = uni.$x.localStorage.getStore("userInfo");
-  },
+	data() {
+		return {
+			src: "",
+			userInfo: uni.$x.localStorage.getStore("userInfo"),
+		};
+	},
+	methods: {
+		user() {
+			uni.$u.throttle(() => {
+				uni.navigateTo({url: "/pages_sub/user/user"});
+			}, 1000);
+		},
+		about() {
+			uni.$u.throttle(() => {
+				uni.navigateTo({url: "/pages/common/about/about?mode=0"});
+			}, 1000);
+		},
+		toSetting() {
+			uni.$u.throttle(() => {
+				uni.navigateTo({url: "/pages/common/setting/setting"});
+			}, 1000);
+		},
+		helpFeedback() {
+			uni.$u.throttle(() => {
+				uni.navigateTo({url: "/pages/common/helpFeedback/helpFeedback"});
+			}, 1000);
+		},
+		feedback() {
+			uni.$u.throttle(() => {
+				uni.navigateTo({url: "/pages/common/helpFeedback/feedback"});
+			}, 1000);
+		},
+		toGeo() {
+			uni.$u.throttle(() => {
+				uni.navigateTo({url: "/pages_sub/user/geo"});
+			}, 1000);
+		},
+		logout() {
+			uni.$emit("logout", 1);
+		},
+	},
+	mounted() {
+		this.userInfo = uni.$x.localStorage.getStore("userInfo");
+	},
 };
 </script>
 
@@ -212,6 +172,6 @@ export default {
 
 <style>
 .user-cell .u-cell__body {
-  padding: 0px !important;
+    padding: 0px !important;
 }
 </style>

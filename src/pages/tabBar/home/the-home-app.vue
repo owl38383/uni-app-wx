@@ -5,12 +5,12 @@ export default {
 		return {
 			appList: [
 				{
-					icon: "ie",
+					icon: "IE-circle-fill",
 					label: "独立式设备",
 					page: '/pages_sub/device/device?device_thing_type=info_device_dtu&title=独立式设备'
 				},
 				{
-					icon: "github-circle-fill",
+					icon: "google-circle-fill",
 					label: "部件",
 					page: '/pages_sub/device/device?device_thing_type=info_device_component&title=部件'
 				},
@@ -20,17 +20,17 @@ export default {
 					page: '/pages_sub/device/device?device_thing_type=info_device_controller&title=控制器'
 				},
 				{
-					icon: "camera-fill",
+					icon: "android-fill",
 					label: "传输设备",
 					page: '/pages_sub/device/device?device_thing_type=info_device_transmission&title=传输设备'
 				},
 				{
-					icon: "android-fill",
+					icon: "email-fill",
 					label: "建筑列表",
 					page: '/pages_sub/building/building'
 				},
 				{
-					icon: "google-circle-fill",
+					icon: "weixin-circle-fill",
 					label: "单位信息",
 					page: '/pages_sub/company/company'
 				},

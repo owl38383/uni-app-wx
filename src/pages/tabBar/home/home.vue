@@ -56,7 +56,7 @@
                             <view class="">{{ item.info_device.last_active_time}}</view>
                         </view>
                         <view class="text" style="width: 100rpx;">
-                            <u-icon color="#5ac725" :label="item.label" :name="item.info_device.enum_device_online_status.status == '在线'?'wifi':'wifi-off'" labelPos="bottom" labelSize="12" size="38"></u-icon>
+                            <u-icon :color="item.info_device.enum_device_online_status.status == '在线'?'#5ac725':''" :label="item.label" :name="item.info_device.enum_device_online_status.status == '在线'?'wifi':'wifi-off'" labelPos="bottom" labelSize="12" size="38"></u-icon>
                         </view>
                     </view>
                 </view>

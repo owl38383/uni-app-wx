@@ -61,7 +61,7 @@ export default {
 			this.vPage.page_no = 0;
 			return this.get_building_list();
 		},
-		@loadingStatus('loading')
+		// @loadingStatus('loading')
 		get_building_list() {
 			return uni.$x.api.get_building_list().then(res => {
 				let oldList = this.buildingData.list
