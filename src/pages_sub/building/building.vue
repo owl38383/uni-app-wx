@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import {loadingStatus} from "@/common/js/decorator";
 
 export default {
 	mixins: [uni.$x.pageMixins],
@@ -42,7 +41,7 @@ export default {
 				total: 0,
 				list: [],
 			},
-			vPage:{
+			vPage: {
 				page_no: 0,
 				page_size: 10,
 			},
@@ -53,13 +52,16 @@ export default {
 		
 		},
 		// 默认加载
-		initLoad() {
+		async initLoad() {
 			this.buildingData = {
 				total: 0,
 				list: [],
 			}
 			this.vPage.page_no = 0;
-			return this.get_building_list();
+			this.loading = true;
+			await this.get_building_list();
+			this.loading = false;
+			
 		},
 		// @loadingStatus('loading')
 		get_building_list() {
@@ -77,23 +79,23 @@ export default {
 		},
 	},
 	onLoad() {
-		this.get_building_list()
+		this.initLoad()
 	}
 }
 </script>
 
 <style lang="scss" scoped>
 .building-list {
-    height: 100%;
+  height: 100%;
 }
 
 .building-card-cell {
-    min-height: 110px;
-    margin: 8px 10px 0 10px;
-    padding: 5px;
-    border-radius: 8px;
-    border: $uni-border-3 2px solid;
-    background: $uni-bg-color;
-    box-shadow: $uni-shadow-base;
+  min-height: 110px;
+  margin: 8px 10px 0 10px;
+  padding: 5px;
+  border-radius: 8px;
+  border: $uni-border-3 2px solid;
+  background: $uni-bg-color;
+  box-shadow: $uni-shadow-base;
 }
 </style>

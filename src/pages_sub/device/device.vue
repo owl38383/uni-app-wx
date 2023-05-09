@@ -31,13 +31,11 @@
 
 <script>
 
-import {loadingStatus} from "@/common/js/decorator";
 
 export default {
 	mixins: [uni.$x.pageMixins],
 	data() {
 		return {
-			loading: true,
 			deviceData: {
 				total: 0,
 				list: [],
@@ -57,13 +55,15 @@ export default {
 	},
 	methods: {
 		// 默认加载
-		initLoad() {
+		async initLoad() {
 			this.deviceData = {
 				total: 0,
 				list: [],
 			}
 			this.vPage.page_no = 0;
-			return this.get_device_list();
+			this.loading = true
+			await this.get_device_list();
+			this.loading = false
 		},
 		// @loadingStatus('loading')
 		get_device_list() {

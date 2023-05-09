@@ -16,6 +16,13 @@ module.exports = [
           enablePullDownRefresh: false,
         },
       },
+	    {
+        path: "firesystem",
+        style: {
+          navigationBarTitleText: "消防设施系统",
+          enablePullDownRefresh: false,
+        },
+      },
     ],
   },
 ];

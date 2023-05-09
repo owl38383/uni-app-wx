@@ -5,7 +5,7 @@ module.exports = [
       {
         path: "user",
         style: {
-          navigationBarTitleText: "",
+          navigationBarTitleText: "系统权限",
           enablePullDownRefresh: true,
         },
       },
@@ -13,6 +13,13 @@ module.exports = [
         path: "geo",
         style: {
           navigationBarTitleText: "位置信息",
+          enablePullDownRefresh: false,
+        },
+      },
+	    {
+        path: "settings",
+        style: {
+          navigationBarTitleText: "个人设置",
           enablePullDownRefresh: false,
         },
       },

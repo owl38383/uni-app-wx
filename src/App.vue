@@ -79,7 +79,7 @@ export default {
 					// #endif
 					
 					// #ifndef MP-WEIXIN
-					this.$x.UIConfig.navbarHeight = (res.platform === 'android' ? 48 : 44) + this.$x.UIConfig.statusBarHeight;
+					this.$x.UIConfig.navbarHeight = (res.platform === 'android' ? 14 : 44) + this.$x.UIConfig.statusBarHeight;
 					// #endif
 					// 设置导航栏高度
 				},
@@ -115,4 +115,12 @@ export default {
 @import "@/common/css/common.scss";
 @import "@/common/css/flex.scss";
 @import "@/common/font/iconfont.css";
+
+::v-deep .amap-logo {
+  opacity: 0 !important;
+}
+
+::v-deep .amap-copyright {
+  opacity: 0 !important;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
     <view class="u-flex-column x-padding-10">
         <u-skeleton :loading="loading" :rowsHeight="30" :title="false" rows="20">
-            <u-form v-if="!loading" labelPosition="left" labelWidth='120'>
+            <u-form v-if="!loading && device_info.info_device" labelPosition="left" labelWidth='120'>
                 <u-form-item>
                     <u-image :src="device_info.info_file_storage.hostname+device_info.info_file_storage.absolute_path"/>
                 </u-form-item>
@@ -82,12 +82,8 @@
 
 <script>
 
-import UImage from "@/uni_modules/uview-ui/components/u--image/u--image.vue";
-import { loadingStatus, loggingDecorator} from "@/common/js/decorator";
-
 export default {
 	name: 'device_info',
-	components: {UImage},
 	data() {
 		return {
 			info_params: {
@@ -95,16 +91,22 @@ export default {
 				device_type: '',
 			},
 			device_info: {
-				info_device: {}
+				info_device: {},
+				info_company: {},
+				info_system: {},
+				info_area: {},
 			},
-			loading: false,
+			loading: true,
 		}
 	},
 	methods: {
-		// @loadingStatus("loading")
-		// @loggingDecorator()
-		 get_info() {
-			return  uni.$x.api.get_device_info(this.info_params).then(res => {
+		async initData() {
+			this.loading = true;
+			await this.get_info()
+			this.loading = false;
+		},
+		get_info() {
+			return uni.$x.api.get_device_info(this.info_params).then(res => {
 				this.device_info = res;
 			})
 		},
@@ -117,7 +119,7 @@ export default {
 		this.info_params.device_id = option.device_id;
 		this.info_params.device_type = option.device_type;
 		if (option.device_id && option.device_type) {
-			this.get_info()
+			this.initData()
 		} else {
 			uni.showToast({
 				title: '信息不存在',

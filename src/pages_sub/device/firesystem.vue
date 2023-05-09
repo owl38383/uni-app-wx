@@ -2,28 +2,28 @@
     <view>
         <view class="device-list">
             <u-skeleton :loading="loading" :rowsHeight="110" :title="false" rows="12" rowsWidth="100%">
-                <view v-for="(item,index) in companyData.list" :key="index" class="device-card-cell"
+                <view v-for="(item,index) in deviceData.list" :key="index" class="device-card-cell"
                       @click="toInfo(item)">
-                    <u-divider :text="item.info_company.company_name" textPosition="left"></u-divider>
+                    <u-divider :text="item.info_device.name" textPosition="left"></u-divider>
 
                     <view class="u-flex u-flex-row">
                         <view class="text u-flex-fill">
-                            <view class="">编号 {{ item.info_company.company_id }}</view>
-                            <view class="">位置 {{ item.info_company.company_address }}</view>
+                            <view class="">编号 {{ item.name }}</view>
+                            <view class="">位置 {{  }}</view>
                         </view>
                         <view class="text">
-                            {{ item.system_type.length }}
+                            {{ }}
                         </view>
                     </view>
                 </view>
-                <u-divider :text="`共${companyData.total }条，已加载${companyData.list.length}条`"
+                <u-divider :text="`共${deviceData.total }条，已加载${deviceData.list.length}条`"
                            style="height: 10px">
                 </u-divider>
 
-                <view v-if="companyData.list && companyData.list.length >=10"
+                <view v-if="deviceData.list && deviceData.list.length >=10"
                       style="height: 10px;align-items: center;" @tap="goTop">点击这里返回顶部
                 </view>
-                <u-empty v-if="!companyData.list || companyData.list.length === 0" mode="data"/>
+                <u-empty v-if="!deviceData.list || deviceData.list.length === 0" mode="data"/>
             </u-skeleton>
         </view>
     </view>
@@ -36,22 +36,20 @@ export default {
 	mixins: [uni.$x.pageMixins],
 	data() {
 		return {
-			companyData: {
+			deviceData: {
 				total: 0,
 				list: [],
 			},
 			vPage: {
 				page_no: 0,
 				page_size: 10,
-				is_all: 1,
-				unit_type: 'info_company_cared',
 			},
 		}
 	},
 	methods: {
 		// 默认加载
 		async initLoad() {
-			this.companyData = {
+			this.deviceData = {
 				total: 0,
 				list: [],
 			}
@@ -61,15 +59,15 @@ export default {
 			this.loading = false
 		},
 		get_data() {
-			return uni.$x.api.get_company_list(this.vPage).then(res => {
-				let oldList = this.companyData.list
-				this.companyData.list = oldList.concat(res.list);
-				this.companyData.total = res.total;
+			return uni.$x.api.get_system_list(this.vPage).then(res => {
+				let oldList = this.deviceData.list
+				this.deviceData.list = oldList.concat(res.list);
+				this.deviceData.total = res.total || 0;
 			})
 		},
 		toInfo(item) {
 			uni.navigateTo({
-				url: `/pages_sub/company/company_info?company_id=${item.info_company.company_id}&company_type=${item.info_company.company_type}`
+				url: `/pages_sub/device/device_info?device_id=${item.info_device.thing_id}&device_type=${item.info_device.thing_type}`
 			})
 		},
 		loadMore() {

@@ -9,11 +9,11 @@
                 <u-icon name="scan" size="18"/>
             </view>
 
-            <view slot="title">
-                <view class="u-flex-row" size="20" @click="showCheckCompany">
+            <view slot="title" class="u-flex-row u-flex-start">
+                <view class=" x-ellipsis" size="20" @click="showCheckCompany">
                     {{ company.checkCompany.name }}
-                    <u-icon name="arrow-down" v-show="showSelect"/>
                 </view>
+                <u-icon name="arrow-down" v-show="showSelect"/>
             </view>
         </x-navbar>
 
@@ -38,7 +38,7 @@
                 </view>
             </view>
             <view :scroll-x="true" class="app-card">
-                <view v-for="(item, index) in appList" :key="index" class="app-card-item" @click="navicatPath(item)">
+                <view v-for="(item, index) in appList" :key="index" class="app-card-item" @click="navicatPath(item)" v-if="getShowAppStatus(item)">
                     <u-icon :label="item.label" :name="item.icon" labelPos="bottom" labelSize="12" size="38"></u-icon>
                 </view>
             </view>
@@ -46,7 +46,7 @@
                           @change="changeStatusCategory"/>
             <scroll-view :enable-back-to-top="true" :refresher-enabled="true" :scroll-top="scrollTop"
                          :scroll-y="true" class="device-card u-flex-fill" @refresherpulling="refresherPulling"
-                         @scroll="scroll" @scrolltolower="loadMore">
+                         @scroll="scroll" @scrolltolower="loadMore" :refresher-triggered="device_loading">
                 <view v-for="(item,index) in deviceData.list" :key="index" class="device-cell" @click="toInfo(item)">
                     <u-divider :text="item.info_device.name" textPosition="left"></u-divider>
                     <view class="u-flex u-flex-row">
@@ -84,6 +84,7 @@ export default {
 	data() {
 		return {
 			company: uni.$x.localStorage.getStore("company"),
+			userInfo: uni.$x.localStorage.getStore("userInfo"),
 			show: false,
 		};
 	},
@@ -149,7 +150,7 @@ export default {
 }
 
 .device-card {
-  height: 0;
+  height: 100%;
 
   .device-cell {
     border:$uni-border-3 2px solid;

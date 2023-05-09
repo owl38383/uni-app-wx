@@ -1,5 +1,4 @@
 <script>
-import {loadingStatus, loggingDecorator} from "@/common/js/decorator";
 
 export default {
 	name: "the-home-device",
@@ -56,16 +55,16 @@ export default {
 	},
 	methods: {
 		// 默认加载
-		initLoad() {
+		async initLoad() {
 			this.deviceData = {
 				total: 0,
 				list: [],
 			}
 			this.device_list_params.page_no = 0;
-			this.get_device_list();
+			this.device_loading = true
+			await this.get_device_list();
+			this.device_loading = false
 		},
-		// @loadingStatus("device_loading")
-		// @loggingDecorator()
 		get_device_list() {
 			return uni.$x.api
 				.get_device_list_by_any_ids(this.device_list_params)

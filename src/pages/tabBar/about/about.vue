@@ -61,22 +61,22 @@ export default {
 		},
 		about() {
 			uni.$u.throttle(() => {
-				uni.navigateTo({url: "/pages/common/about/about?mode=0"});
+				uni.navigateTo({url: "/pages_sub/user/about?mode=0"});
 			}, 1000);
 		},
 		toSetting() {
 			uni.$u.throttle(() => {
-				uni.navigateTo({url: "/pages/common/setting/setting"});
+				uni.navigateTo({url: "/pages_sub/user/settings"});
 			}, 1000);
 		},
 		helpFeedback() {
 			uni.$u.throttle(() => {
-				uni.navigateTo({url: "/pages/common/helpFeedback/helpFeedback"});
+				uni.navigateTo({url: "/pages_sub/user/helpFeedback"});
 			}, 1000);
 		},
 		feedback() {
 			uni.$u.throttle(() => {
-				uni.navigateTo({url: "/pages/common/helpFeedback/feedback"});
+				uni.navigateTo({url: "/pages_sub/user/feedback"});
 			}, 1000);
 		},
 		toGeo() {
