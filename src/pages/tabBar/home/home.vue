@@ -6,14 +6,14 @@
         </u-overlay>
         <x-navbar>
             <view slot="left" @click="openScan">
-                <u-icon name="scan" size="18"/>
+                <u-icon name="scan" size="20"/>
             </view>
 
             <view slot="title" class="u-flex-row u-flex-start">
-                <view class=" x-ellipsis" size="20" @click="showCheckCompany">
+                <view class=" x-ellipsis" @click="showCheckCompany">
                     {{ company.checkCompany.name }}
                 </view>
-                <u-icon name="arrow-down" v-show="showSelect"/>
+                <u-icon v-show="showSelect" name="arrow-down" size="20"/>
             </view>
         </x-navbar>
 
@@ -38,25 +38,29 @@
                 </view>
             </view>
             <view :scroll-x="true" class="app-card">
-                <view v-for="(item, index) in appList" :key="index" class="app-card-item" @click="navicatPath(item)" v-if="getShowAppStatus(item)">
+                <view v-for="(item, index) in appList" v-if="getShowAppStatus(item)" :key="index" class="app-card-item"
+                      @click="navicatPath(item)">
                     <u-icon :label="item.label" :name="item.icon" labelPos="bottom" labelSize="12" size="38"></u-icon>
                 </view>
             </view>
             <u-subsection :current="curStatusCategory" :list="status_category_list" mode="button"
                           @change="changeStatusCategory"/>
-            <scroll-view :enable-back-to-top="true" :refresher-enabled="true" :scroll-top="scrollTop"
-                         :scroll-y="true" class="device-card u-flex-fill" @refresherpulling="refresherPulling"
-                         @scroll="scroll" @scrolltolower="loadMore" :refresher-triggered="device_loading">
+            <scroll-view :enable-back-to-top="true" :refresher-enabled="true" :refresher-triggered="device_loading"
+                         :scroll-top="scrollTop" :scroll-y="true" class="device-card u-flex-fill"
+                         @refresherpulling="refresherPulling" @scroll="scroll" @scrolltolower="loadMore">
                 <view v-for="(item,index) in deviceData.list" :key="index" class="device-cell" @click="toInfo(item)">
                     <u-divider :text="item.info_device.name" textPosition="left"></u-divider>
                     <view class="u-flex u-flex-row">
                         <view class="text" style="-webkit-flex: 1;flex: 1;">
                             <view class="">编号 {{ item.info_device.thing_id }}</view>
                             <view class="">位置 {{ item.info_device.specific }}</view>
-                            <view class="">{{ item.info_device.last_active_time}}</view>
+                            <view class="">{{ item.info_device.last_active_time }}</view>
                         </view>
                         <view class="text" style="width: 100rpx;">
-                            <u-icon :color="item.info_device.enum_device_online_status.status == '在线'?'#5ac725':''" :label="item.label" :name="item.info_device.enum_device_online_status.status == '在线'?'wifi':'wifi-off'" labelPos="bottom" labelSize="12" size="38"></u-icon>
+                            <u-icon :color="item.info_device.enum_device_online_status.status == '在线'?'#5ac725':''"
+                                    :label="item.label"
+                                    :name="item.info_device.enum_device_online_status.status == '在线'?'wifi':'wifi-off'"
+                                    labelPos="bottom" labelSize="12" size="38"></u-icon>
                         </view>
                     </view>
                 </view>
@@ -100,7 +104,7 @@ export default {
 	},
 	methods: {
 		showCheckCompany() {
-			if(this.showSelect) this.show = !this.show
+			if (this.showSelect) this.show = !this.show
 		},
 		loadOn() {
 			let that = this;
@@ -143,7 +147,7 @@ export default {
     padding: 4px;
     box-sizing: border-box;
     border: $uni-border-2 2px solid;
-	  box-shadow: $uni-shadow-base;
+    box-shadow: $uni-shadow-base;
     border-radius: 4px;
     margin: 4px;
   }
@@ -153,8 +157,8 @@ export default {
   height: 100%;
 
   .device-cell {
-    border:$uni-border-3 2px solid;
-	  background: $uni-bg-color;
+    border: $uni-border-3 2px solid;
+    background: $uni-bg-color;
     box-shadow: $uni-shadow-base;
     min-height: 110px;
     margin-top: 6px;
