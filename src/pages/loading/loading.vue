@@ -28,6 +28,10 @@ export default {
           uni.reLaunch({
             url: "/pages/tabBar/index/index",
           });
+	        // 发送上传位置事件
+	        uni.$emit('upload_geo')
+	        // 连接socket
+	        uni.$emit('client_socket')
         } else {
           uni.reLaunch({
             url: "/pages/login/login",

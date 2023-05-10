@@ -30,10 +30,7 @@ setInterval(() => {
 function cacheGet(target, time = 1000 * 10) {
 	return async function (...args) {
 		const json = JSON.stringify(arguments)
-		if (cacheMap.get(json)) {
-			console.log('cache result')
-			return cacheMap.get(json).result
-		} else {
+		if (navigator.onLine) {
 			console.log('ajax result')
 			const result = await target.apply(this, arguments);
 			cacheMap.set(json, {
@@ -41,6 +38,9 @@ function cacheGet(target, time = 1000 * 10) {
 				expiredTime: Date.now() + time
 			});
 			return result;
+		}else{
+			console.log('cache result')
+			return cacheMap.get(json).result
 		}
 	}
 }

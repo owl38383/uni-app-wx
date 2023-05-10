@@ -57,8 +57,6 @@ export default {
 		this.unloadOn()
 	},
 	onLoad() {
-		uni.$emit('upload_geo')
-		
 		// 开发中因为热加载会多次监听
 		this.unloadOn()
 		uni.setNavigationBarTitle({

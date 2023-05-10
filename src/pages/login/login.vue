@@ -44,7 +44,7 @@ export default {
 					uni.$x.localStorage.setStore("username", "");
 					uni.$x.localStorage.setStore("ifRememberPsd", false);
 				}
-				uni.$x.localStorage.setStore(res.user_id + "_app_count", {});
+				uni.$x.localStorage.setStore(`app_count${res.user_id}`, {});
 				uni.$x.localStorage.setStore("is_login", true);
 				uni.$x.localStorage.setStore("userInfo", res);
 				getApp().globalData.loading = true;
@@ -55,11 +55,10 @@ export default {
 					title: "欢迎回来\t" + res.name,
 					icon: "none",
 				});
-				// 发送上传位置事件
-				uni.$emit('upload_geo')
+				
 				this.$u.route({
 					type: "reLaunch",
-					url: "/pages/tabBar/index/index",
+					url: "/pages/loading/loading",
 				});
 			});
 		},

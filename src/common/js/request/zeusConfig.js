@@ -27,5 +27,8 @@ export class ZeusConfig {
 	getHost = () => {
 		return this.#host
 	}
+	getWsUrl = () => {
+		return this.#host ? this.#host.replace('http', 'ws') : null
+	}
 	
 }

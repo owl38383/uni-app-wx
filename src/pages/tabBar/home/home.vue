@@ -80,7 +80,7 @@ import TheHomeDevice from "@/pages/tabBar/home/the-home-device.vue";
 import TheHomeApp from "@/pages/tabBar/home/the-home-app.vue";
 import TheHomeScan from "@/pages/tabBar/home/the-home-scan.vue";
 import TheCheckCompany from "@/pages/tabBar/home/the-check-company.vue";
-import {dateUtils} from "@/common/util.js"
+import {dateUtils} from "@/common/js/util.js"
 
 export default {
 	mixins: [TheHomeCard, TheHomeDevice, TheHomeApp, TheHomeScan,],

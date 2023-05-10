@@ -3,7 +3,7 @@
         <u-skeleton :loading="loading" :rowsHeight="30" :title="false" rows="20">
             <u-form v-if="!loading && device_info.info_device" labelPosition="left" labelWidth='120'>
                 <u-form-item>
-                    <u-image :src="device_info.info_file_storage.hostname+device_info.info_file_storage.absolute_path"/>
+                    <u-image :src="joinUrl(device_info.info_file_storage.hostname,device_info.info_file_storage.absolute_path)"/>
                 </u-form-item>
 
                 <u-form-item label="历史告警">
@@ -82,6 +82,8 @@
 
 <script>
 
+import {joinUrl} from "@/common/js/util";
+
 export default {
 	name: 'device_info',
 	data() {
@@ -100,6 +102,7 @@ export default {
 		}
 	},
 	methods: {
+		joinUrl,
 		async initData() {
 			this.loading = true;
 			await this.get_info()
