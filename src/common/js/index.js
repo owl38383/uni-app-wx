@@ -26,6 +26,7 @@ const $x = {
 
 // $u挂载到uni对象上
 uni.$x = $x
+uni.$x.zeusConfig.setHost(uni.$x.localStorage.getStore('zeusConfig'))
 const install = (Vue) => {
 	// #ifndef APP-NVUE
 	// 只有vue，挂载到Vue.prototype才有意义，因为nvue中全局Vue.prototype和Vue.mixin是无效的

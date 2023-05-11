@@ -1,3 +1,5 @@
+import {log} from "@dcloudio/vue-cli-plugin-uni/lib/format-log";
+
 export class WebSocketClient {
 	constructor(url, protocols = []) {
 		this.url = url;
@@ -13,50 +15,60 @@ export class WebSocketClient {
 	}
 	
 	connect() {
-		this.socket = new WebSocket(this.url, this.protocols);
-		
-		this.socket.onopen = (event) => {
+		let _that = this;
+		this.socket  = uni.connectSocket({
+			url: _that.url,
+			header: {
+				'Content-Type': 'application/json;charset=UTF-8',
+			},
+			protocols: this.protocols,
+			method: 'GET',
+			complete:()=>{}
+		})
+		console.debug(this.socket)
+		uni.onSocketOpen(function (event) {
 			console.log('WebSocket连接已打开');
-			this.reconnectAttempts = 0; // 重置重连尝试次数
-			if (this.onopen) {
-				this.onopen(event);
+			_that.send('connection success')
+			_that.reconnectAttempts = 0; // 重置重连尝试次数
+			if (_that.onopen) {
+				_that.onopen(event);
 			}
-		};
+		});
 		
-		this.socket.onmessage = (event) => {
-			console.log('WebSocket收到消息:', event.data);
-			if (this.onmessage) {
-				this.onmessage(event);
+		uni.onSocketError(function (error) {
+			console.error('WebSocket连接发生错误:', error);
+			if (_that.onerror) {
+				_that.onerror(error);
 			}
-		};
+		});
 		
-		this.socket.onclose = (event) => {
+		uni.onSocketMessage(function (event) {
+			// console.log('WebSocket收到消息:', event.data);
+			if (_that.onmessage) {
+				_that.onmessage(event);
+			}
+		});
+		
+		uni.onSocketClose(function (event) {
 			console.log('WebSocket连接已关闭:', event.code, event.reason);
-			if (this.onclose) {
-				this.onclose(event);
+			if (_that.onclose) {
+				_that.onclose(event);
 			}
-			if (this.reconnectAttempts < this.maxReconnectAttempts) {
+			if (_that.reconnectAttempts < _that.maxReconnectAttempts) {
 				setTimeout(() => {
 					console.log('WebSocket正在尝试重新连接...');
-					this.reconnectAttempts++;
-					this.connect();
-				}, this.reconnectInterval);
+					_that.reconnectAttempts++;
+					_that.connect();
+				}, _that.reconnectInterval);
 			} else {
 				console.log('WebSocket连接尝试次数已达到最大值，停止重连');
 			}
-		};
-		
-		this.socket.onerror = (error) => {
-			console.error('WebSocket连接发生错误:', error);
-			if (this.onerror) {
-				this.onerror(error);
-			}
-		};
+		});
 	}
 	
 	send(message) {
-		if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-			this.socket.send(message);
+		if (this.socket && this.socket.readyState === 1) {
+			uni.sendSocketMessage({data: message});
 		} else {
 			console.error('WebSocket连接未打开，无法发送消息');
 		}

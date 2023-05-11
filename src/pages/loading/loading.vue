@@ -1,13 +1,15 @@
 <template>
   <view>
-    <u-loading-page :loading="true" loading-mode="spinner"></u-loading-page>
+    <u-loading-page :loading="loading" loading-mode="spinner"></u-loading-page>
   </view>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+			loading:true,
+    };
   },
   methods: {
     async login_before() {
@@ -15,11 +17,12 @@ export default {
         uni.$x.api.no_login_info().then((res) => {
           if (res) {
             uni.$x.zeusConfig.setHost(res.host);
+	          uni.$x.localStorage.setStore('zeusConfig',res.host);
             console.log(uni.$x.zeusConfig.getHost());
             resolve();
           } else {
           }
-        });
+        }).finally();
       });
     },
     initData() {

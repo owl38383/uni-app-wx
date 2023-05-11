@@ -33,7 +33,7 @@ export default {
 			// 连接socket
 			uni.$on("client_socket", (data) => {
 				console.log("监听到事件来自 client_socket ，携带参数 msg 为：" + data);
-				_that.clientWebSocket()
+				_that.client_web_socket()
 			})
 		},
 		unloadOn() {
@@ -98,7 +98,7 @@ export default {
 				});
 			}, 3000)
 		},
-		clientWebSocket() {
+		client_web_socket() {
 			let u_type = 'h'
 			// #ifdef APP-PLUS
 			 u_type = uni.getSystemInfoSync().platform === 'ios' ? 'i' : 'a'
@@ -110,17 +110,19 @@ export default {
 			
 			let user_info = uni.$x.localStorage.getStore("userInfo");
 			let user_id = user_info.user_id
-			let user_message = uni.$x.localStorage.getStore(`msg_${user_id}`) || [];
 			const client = new WebSocketClient(uni.$x.zeusConfig.getWsUrl() + `/wss/cannon?pid=119&uid=${user_id}&utype=${u_type}`);
 			client.connect();
-			client.onmessage = (event) => {
+			client.onmessage = async (event) => {
 				const message = event.data;
+				let user_message = uni.$x.localStorage.getStore(`msg_${user_id}`) || [];
 				user_message.push(message)
-				console.log('WebSocket收到消息:', message);
+				uni.$x.localStorage.setStore(`msg_${user_id}`,user_message)
+				console.debug(`当前消息总数:${user_message.length}`)
+				// console.debug('WebSocket收到消息:', message);
 				
 				// 处理消息内容
-				const parsedMessage = JSON.parse(message);
-				console.log('解析后的消息:', parsedMessage);
+				// const parsedMessage = JSON.parse(message);
+				// console.debug('解析后的消息:', parsedMessage);
 				
 				// 发送回复消息
 				const replyMessage = { type: 'reply', content: '收到消息' };

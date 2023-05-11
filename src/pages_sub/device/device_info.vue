@@ -2,8 +2,16 @@
     <view class="u-flex-column x-padding-10">
         <u-skeleton :loading="loading" :rowsHeight="30" :title="false" rows="20">
             <u-form v-if="!loading && device_info.info_device" labelPosition="left" labelWidth='120'>
-                <u-form-item>
-                    <u-image :src="joinUrl(device_info.info_file_storage.hostname,device_info.info_file_storage.absolute_path)"/>
+                <u-form-item >
+                    <x-map-canvas
+                            :map-url="joinUrl(device_info.info_file_storage.hostname,device_info.info_file_storage.absolute_path)"
+                            :text="device_info.info_things_compos.specific"
+                            :points="[
+																		{
+																			x:device_info.info_things_compos.x,
+																			y:device_info.info_things_compos.y,
+																		}
+		                              ]"/>
                 </u-form-item>
 
                 <u-form-item label="历史告警">

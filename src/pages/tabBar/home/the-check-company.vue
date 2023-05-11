@@ -13,7 +13,7 @@
                 <u-skeleton :loading="loading" :rowsHeight="120" :title="false" rows="10">
                     <uni-collapse>
                         <uni-collapse-item v-for="(item, index) in company_list" :key="index"
-                                           :show-arrow="item.child instanceof Array && item.child.length>0"
+                                           :show-arrow="!!item.child && item.child.length>0"
                                            class="company-cell">
                             <view slot="title" class="uni-title x-padding-10" @click.stop="checkCompany(item)">
                                 <u-icon

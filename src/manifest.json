@@ -126,6 +126,9 @@
                     "serviceHost" : ""
                 }
             }
+        },
+        "devServer" : {
+            "https" : false
         }
     },
     "locale" : "zh-Hans"

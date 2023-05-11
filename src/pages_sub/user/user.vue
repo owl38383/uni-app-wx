@@ -1,7 +1,7 @@
 <template>
     <view>
         <u-cell-group>
-            <u-cell v-for="item in auth" :label="item.desc" :title="item.title" :value="item.status"
+            <u-cell v-for="(item,index) in auth" :key="index" :label="item.desc" :title="item.title" :value="item.status"
                     @click="gotoPermission(item.key)"/>
         </u-cell-group>
     </view>

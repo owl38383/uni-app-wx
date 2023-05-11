@@ -13,15 +13,15 @@ const requestList = [];
 const cacheMap = new Map()
 
 // 定时删除过期key
-setInterval(() => {
-	const now = Date.now()
-	for (const [key, value] of cacheMap) {
-		if (now > value.expiredTime) {
-			console.log('delete', key)
-			cacheMap.delete(key)
-		}
-	}
-}, 1000)
+// setInterval(() => {
+// 	const now = Date.now()
+// 	for (const [key, value] of cacheMap) {
+// 		if (now > value.expiredTime) {
+// 			console.log('delete', key)
+// 			cacheMap.delete(key)
+// 		}
+// 	}
+// }, 1000)
 
 /**
  * 缓存get请求方法 结合定时器，定时清除
@@ -30,18 +30,28 @@ setInterval(() => {
 function cacheGet(target, time = 1000 * 10) {
 	return async function (...args) {
 		const json = JSON.stringify(arguments)
-		if (navigator.onLine) {
-			console.log('ajax result')
-			const result = await target.apply(this, arguments);
-			cacheMap.set(json, {
-				result,
-				expiredTime: Date.now() + time
-			});
-			return result;
-		}else{
-			console.log('cache result')
-			return cacheMap.get(json).result
-		}
+		let resData = {}
+		await uni.getNetworkType().then(async res => {
+			// console.debug(res[1].networkType)
+			if (res[1].networkType === 'none') {
+				console.log('cache result')
+				resData = cacheMap.get(json).result
+			} else {
+				const result = await target.apply(this, arguments);
+				if (!result && cacheMap.get(json)) {
+					console.log('cache result')
+					resData = cacheMap.get(json).result
+				} else {
+					console.log('ajax result')
+					cacheMap.set(json, {
+						result,
+						expiredTime: Date.now() + time
+					});
+					resData = result;
+				}
+			}
+		})
+		return resData
 	}
 }
 
@@ -103,7 +113,7 @@ function request(method, url, data, header, custom) {
 // 定义 get 请求函数
 export function get(url = String, data = Object, header = {}, custom = Object, cacheTime = 10000) {
 	const wrapperFunction = cacheGet(request, cacheTime)
-	return wrapperFunction(METHOD_GET, url, data, header , custom, )
+	return wrapperFunction(METHOD_GET, url, data, header, custom,)
 }
 
 // 定义 post 请求函数

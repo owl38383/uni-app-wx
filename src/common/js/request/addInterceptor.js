@@ -42,7 +42,6 @@ function formatRequest(config) {
 	} else if (!host) {
 		uni.$emit('server_info', config.url);
 	}
-	
 	config.url = `${host}${config.url}?${Object.keys(before_data.params).map(key => `${key}=${before_data.params[key]}`).join('&')}`
 	config.data = before_data.data
 	return config;
@@ -54,23 +53,31 @@ function formatResponse(response) {
 		return res.data;
 	} else if (res.code == 201 || res.code == 9996) {
 		// 假设201为token失效，这里跳转登录
-		uni.$u.toast('验证失败，请重新登录');
+		uni.showToast({
+			title: '验证失败，请重新登录',
+			icon: "none",
+		});
 		uni.$emit('logout', 1);
 	} else {
-		uni.$u.toast(res.msg);
+		uni.showToast({
+			title: res.msg,
+			icon: "none",
+		});
 	}
 }
 
 uni.addInterceptor('request', {
 	invoke(args) {
 		args = formatRequest(args)
+		// console.debug('interceptor-invoke',args.url)
 	},
 	success(args) {
 		// 请求成功后，修改code值为1
 		formatResponse(args)
+		// console.debug('interceptor-success',args)
 	},
 	fail(err) {
-		// console.log('interceptor-fail', err)
+		console.debug('interceptor-fail', err)
 	},
 	complete(res) {
 		// console.log('interceptor-complete', res)

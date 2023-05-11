@@ -114,7 +114,8 @@ export default {
 				that.company = data;
 				this.show = false;
 				that.get_card_count()
-				that.get_device_list()
+				// 初始化设备
+				that.initLoad()
 			});
 		},
 	},
