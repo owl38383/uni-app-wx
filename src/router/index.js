@@ -7,7 +7,7 @@ module.exports = [
         style: {
           navigationBarTitleText: "",
 	        navigationStyle: "custom" ,// 隐藏系统导航栏
-          enablePullDownRefresh: false,
+          enablePullDownRefresh: true,
         },
       },
     ],

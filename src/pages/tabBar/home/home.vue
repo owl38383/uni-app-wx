@@ -40,14 +40,17 @@
             <view :scroll-x="true" class="app-card">
                 <view v-for="(item, index) in appList" v-if="getShowAppStatus(item)" :key="index" class="app-card-item"
                       @click="navicatPath(item)">
-                    <u-icon :label="item.label" :name="item.icon" labelPos="bottom" labelSize="12" size="38"></u-icon>
+                    <u-icon :label="item.label" :name="item.icon" color="#2c70b4" labelPos="bottom" labelSize="12" size="38"></u-icon>
                 </view>
             </view>
-            <u-subsection :current="curStatusCategory" :list="status_category_list" mode="button"
-                          @change="changeStatusCategory"/>
-            <scroll-view :enable-back-to-top="true" :refresher-enabled="true" :refresher-triggered="device_loading"
+            <u-sticky :offsetTop="10">
+                <u-subsection :current="curStatusCategory" :list="status_category_list" mode="button"
+                              @change="changeStatusCategory"/>
+            </u-sticky>
+
+            <scroll-view :enable-back-to-top="true" :refresher-triggered="device_loading"
                          :scroll-top="scrollTop" :scroll-y="true" class="device-card u-flex-fill"
-                         @refresherpulling="refresherPulling" @scroll="scroll" @scrolltolower="loadMore">
+                         @scroll="scroll" @scrolltolower="loadMore">
                 <view v-for="(item,index) in deviceData.list" :key="index" class="device-cell" @click="toInfo(item)">
                     <u-divider :text="item.info_device.name" textPosition="left"></u-divider>
                     <view class="u-flex u-flex-row">
@@ -143,12 +146,10 @@ export default {
   .app-card-item {
     flex: none;
     display: inline-block;
-    height: 70px;
+    height: 100%;
     width: 70px;
     padding: 4px;
     box-sizing: border-box;
-    border: $uni-border-2 2px solid;
-    box-shadow: $uni-shadow-base;
     border-radius: 4px;
     margin: 4px;
   }
@@ -156,13 +157,13 @@ export default {
 
 .device-card {
   height: 100%;
-
+	padding: 10px;
+	box-sizing: border-box;
   .device-cell {
-    border: $uni-border-3 2px solid;
-    background: $uni-bg-color;
+    background: #FFFFFF;
     box-shadow: $uni-shadow-base;
     min-height: 110px;
-    margin-top: 6px;
+    margin-bottom: 6px;
     padding: 5px;
     border-radius: 8px;
   }

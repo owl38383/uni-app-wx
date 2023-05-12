@@ -1,8 +1,8 @@
 <template>
     <view class="container">
         <view class="u-flex-fill">
-            <home v-if="tabBarValue === 'home'"></home>
-            <about v-else-if="tabBarValue === 'about'"></about>
+            <home v-if="tabBarValue === 'home'" ref="home"></home>
+            <about v-else-if="tabBarValue === 'about'" ref="about"></about>
         </view>
         <view class="x-tabbar">
             <u-tabbar :fixed="true" :placeholder="true" :safeAreaInsetBottom="true" :value="tabBarValue"
@@ -63,6 +63,11 @@ export default {
 			title: uni.getAppBaseInfo().appName,
 		});
 		this.loadOn()
+	},
+	// 下拉函数
+	async onPullDownRefresh() {
+		await this.$refs[this.tabBarValue].initLoad()
+		uni.stopPullDownRefresh()
 	},
 	onShow() {
 	},
