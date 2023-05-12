@@ -1,6 +1,6 @@
 <template>
     <view class="map-canvas" @click="showMax">
-        <canvas :ref="canvasId" :canvas-id="canvasId" type="2d" @tap="onTap"></canvas>
+        <canvas :ref="canvasId" :canvas-id="canvasId" :style="style" type="2d" @tap="onTap"></canvas>
     </view>
 </template>
 
@@ -26,6 +26,7 @@ export default {
 			canvasWidth: 0,
 			canvasHeight: 0,
 			ctx: null,
+			style: {}
 		};
 	},
 	mounted() {
@@ -40,10 +41,14 @@ export default {
 			})
 		},
 		async initCanvas() {
-			const canvas = uni.createCanvasContext(this.canvasId, this)
 			let size = this.$refs[this.canvasId].$el
 			this.canvasHeight = size?.offsetHeight || 300
 			this.canvasWidth = size?.offsetWidth || 225
+			this.style = {
+				height: this.canvasHeight,
+				width: this.canvasWidth
+			}
+			const canvas = uni.createCanvasContext(this.canvasId, this)
 			this.ctx = canvas
 			if (this.ctx) {
 				await this.loadImage();
@@ -111,7 +116,7 @@ export default {
     height: 100%;
     min-width: 300px;
     min-height: 225px;
-    background: #1b1c20;
+    background: #414141;
     padding: 10px;
     box-sizing: border-box;
 }

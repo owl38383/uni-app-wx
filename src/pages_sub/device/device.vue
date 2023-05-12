@@ -1,8 +1,8 @@
 <template>
-    <view>
+    <view class="x-page">
         <view class="device-list">
             <u-skeleton :loading="loading" :rowsHeight="110" :title="false" rows="12" rowsWidth="100%">
-                <view v-for="(item,index) in deviceData.list" :key="index" class="device-card-cell"
+                <view v-for="(item,index) in deviceData.list" :key="index" class="device-card-cell "
                       @click="toInfo(item)">
                     <u-divider :text="item.info_device.name" textPosition="left"></u-divider>
 
@@ -95,6 +95,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .device-list {
   height: 100%;
 }
@@ -104,8 +105,12 @@ export default {
   margin: 8px 10px 0 10px;
   padding: 5px;
   border-radius: 8px;
-  border: $uni-border-3 2px solid;
   background: $uni-bg-color;
-  box-shadow: $uni-shadow-base;
+  box-shadow: 1px 2px 4px #6297d5;
+  transition: all 0.3s;
+  animation: dynamics 20s ease infinite;
+  -webkit-animation: dynamics 20s ease infinite;
+  -moz-animation: dynamics 20s ease infinite;
+  cursor: pointer;
 }
 </style>

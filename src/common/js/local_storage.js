@@ -16,7 +16,7 @@ const  setStore = (name, value) => {
 	try {
 		//加密
 		let string_value = CryptoJSAES.encrypt(value, miyao);
-		uni.setStorageSync(`${uni.$x.zeusConfig.getChannel()}_${name}`,string_value.toString());
+		uni.setStorageSync(name, string_value.toString());
 		// uni.setStorageSync(name, value);
 	} catch (error) {
 	  console.log(error);
@@ -27,7 +27,7 @@ const  setStore = (name, value) => {
 const getStore = (name) => {
   if (!name) return false;
   try {
-		let value = uni.getStorageSync(`${uni.$x.zeusConfig.getChannel()}_${name}`);
+		let value = uni.getStorageSync(name);
     if (value && value.length > 1) {
       let return_string = CryptoJSAES.decrypt(value, miyao);
       return_string=return_string.toString(encutf8);

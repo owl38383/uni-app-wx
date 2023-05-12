@@ -37,6 +37,7 @@
                     </view>
                 </view>
             </view>
+		        
             <view :scroll-x="true" class="app-card">
                 <view v-for="(item, index) in appList" v-if="getShowAppStatus(item)" :key="index" class="app-card-item"
                       @click="navicatPath(item)">

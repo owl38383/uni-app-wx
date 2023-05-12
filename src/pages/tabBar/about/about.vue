@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import {} from "@/common/js/request/api";
 
 export default {
 	data() {
@@ -87,6 +86,10 @@ export default {
 		logout() {
 			uni.$emit("logout", 1);
 		},
+		// 默认加载
+		async initLoad() {
+		
+		}
 	},
 	mounted() {
 		this.userInfo = uni.$x.localStorage.getStore("userInfo");
