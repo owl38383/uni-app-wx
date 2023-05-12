@@ -86,10 +86,6 @@ export default {
 				// this.curStatusCategory = e.index
 			}, 1000);
 		},
-		// 下拉刷新
-		refresherPulling() {
-			this.initLoad()
-		},
 		// 加载更多
 		loadMore() {
 			uni.$u.throttle(() => {
